@@ -6,6 +6,7 @@
     "libxml2",
     "curl",
     "libpng",
+    "onig",
     "sqlite",
     "libzip"
 ]
