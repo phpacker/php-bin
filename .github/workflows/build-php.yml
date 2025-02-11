@@ -176,7 +176,7 @@ jobs:
             mkdir -p tmp-bin
             cp ../static-php-cli/buildroot/bin/micro.sfx tmp-bin/
             cd tmp-bin
-            zip ../bin/${{ env.SPC_BUILD_OS }}/${{ env.SPC_BUILD_ARCH }}/php-${{ env.PHP_VERSION }}.zip php
+            zip ../bin/${{ env.SPC_BUILD_OS }}/${{ env.SPC_BUILD_ARCH }}/php-${{ env.PHP_VERSION }}.zip micro.sfx
             cd ..
             rm -rf tmp-bin
           fi
