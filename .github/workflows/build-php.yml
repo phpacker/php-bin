@@ -154,6 +154,7 @@ jobs:
       - name: Get built PHP version
         shell: bash
         run: |
+          ls ../static-php-cli/buildroot/bin/
           if [[ "${{ matrix.os }}" == "windows-latest" ]]; then
             PHP_VERSION_FULL=$(../static-php-cli/buildroot/bin/php.exe -r "echo PHP_VERSION;")
           else
