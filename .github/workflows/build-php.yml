@@ -154,12 +154,7 @@ jobs:
       - name: Get built PHP version
         shell: bash
         run: |
-          ls ../static-php-cli/buildroot/bin/
-          if [[ "${{ matrix.os }}" == "windows-latest" ]]; then
-            PHP_VERSION_FULL=$(../static-php-cli/buildroot/bin/php.exe -r "echo PHP_VERSION;")
-          else
-            PHP_VERSION_FULL=$(../static-php-cli/buildroot/bin/php -r "echo PHP_VERSION;")
-          fi
+          PHP_VERSION_FULL=$(../static-php-cli/bin/${{ env.SPC_BINARY }} dev:php-version)
           echo "PHP_VERSION_FULL=$PHP_VERSION_FULL" >> $GITHUB_ENV
 
       - name: Create bin directories
@@ -173,11 +168,11 @@ jobs:
         shell: bash
         run: |
           if [[ "${{ matrix.os }}" == "windows-latest" ]]; then
-            powershell Compress-Archive -Path "../static-php-cli/buildroot/bin/php.exe" -DestinationPath "bin/${{ env.SPC_BUILD_OS }}/${{ env.SPC_BUILD_ARCH }}/php-${{ env.PHP_VERSION }}.zip" -Force
+            powershell Compress-Archive -Path "../static-php-cli/buildroot/bin/micro.sfx" -DestinationPath "bin/${{ env.SPC_BUILD_OS }}/${{ env.SPC_BUILD_ARCH }}/php-${{ env.PHP_VERSION }}.zip" -Force
           else
             rm -f bin/${{ env.SPC_BUILD_OS }}/${{ env.SPC_BUILD_ARCH }}/php-${{ env.PHP_VERSION }}.zip
             mkdir -p tmp-bin
-            cp ../static-php-cli/buildroot/bin/php tmp-bin/
+            cp ../static-php-cli/buildroot/bin/micro.sfx tmp-bin/
             cd tmp-bin
             zip ../bin/${{ env.SPC_BUILD_OS }}/${{ env.SPC_BUILD_ARCH }}/php-${{ env.PHP_VERSION }}.zip php
             cd ..
