@@ -154,8 +154,10 @@ jobs:
       - name: Get built PHP version
         shell: bash
         run: |
-          PHP_VERSION_FULL=$(../static-php-cli/bin/${{ env.SPC_BINARY }} dev:php-version)
+          cd ../static-php-cli
+          PHP_VERSION_FULL=$(./bin/${{ env.SPC_BINARY }} dev:php-version)
           echo "PHP_VERSION_FULL=$PHP_VERSION_FULL" >> $GITHUB_ENV
+          cd ../php-bin
 
       - name: Create bin directories
         shell: bash
