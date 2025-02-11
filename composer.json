@@ -1,5 +1,5 @@
 {
-    "name": "nativephp/php-bin",
+    "name": "phpacker/php-bin",
     "description": "PHP binaries used by the NativePHP framework",
     "keywords": [
         "nativephp",
@@ -31,6 +31,11 @@
         {
             "name": "Simon Hamp",
             "email": "simon.hamp@me.com",
+            "role": "Developer"
+        },
+        {
+            "name": "Willem Leuverink",
+            "email": "willem@leuver.ink",
             "role": "Developer"
         }
     ],

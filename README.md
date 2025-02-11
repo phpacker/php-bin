@@ -1,27 +1,19 @@
-# PHP binaries used by the NativePHP framework
+# PHP binaries used by PHPacker
+
+This is a fork of the general purpose (NativePHP binaries)[https://github.com/NativePHP/php-bin] targeting the (micro SAPI)[https://github.com/easysoft/phpmicro]
 
 ## Installation
 
 You can install the package via Composer:
 
 ```shell
-composer require nativephp/php-bin --dev
+composer require phpacker/php-bin
 ```
-
-or NPM:
-
-```shell
-npm -i @nativephp/php-bin --save-dev
-```
-
-### ℹ️ Heads up...
-> You should install this package as a `dev` dependency, in most cases, and simply copy what you need from it to the
-relevant parts of your application. This will save you distributing all of the PHP binaries with every installation.
 
 ## Building
 
 NativePHP uses [`static-php-cli`](https://static-php.dev) to build minimal, statically-linked, self-contained PHP
-executables for each platform.
+executables for each platform. This fork specifically outputs binaries targeting the micro SAPI
 
 They are automatically built weekly to get the latest versions of PHP near enough as soon as they become available.
 
@@ -36,6 +28,7 @@ Please raise any issues on the [NativePHP/laravel](https://github.com/nativephp/
 
 - [Marcel Pociot](https://github.com/mpociot)
 - [Simon Hamp](https://github.com/simonhamp)
+- [Willem Leuverink](https://github.com/gwleuverink)
 - [All Contributors](../../contributors)
 
 ## License
