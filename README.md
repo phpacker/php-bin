@@ -1,6 +1,6 @@
 # PHP binaries used by PHPacker
 
-This is a fork of the general purpose (NativePHP binaries)[https://github.com/NativePHP/php-bin] targeting the (micro SAPI)[https://github.com/easysoft/phpmicro]
+This is a fork of the general purpose [NativePHP binaries(https://github.com/NativePHP/php-bin) targeting the [micro SAPI](https://github.com/easysoft/phpmicro)
 
 ## Installation
 
