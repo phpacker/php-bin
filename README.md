@@ -13,7 +13,7 @@ composer require phpacker/php-bin
 ## Building
 
 PHPacker uses [`static-php-cli`](https://static-php.dev) to build minimal, statically-linked, self-contained PHP
-executables for each platform. This fork specifically outputs binaries targeting the micro SAPI
+executables for each platform. This fork specifically outputs binaries targeting the micro SAPI.
 
 They are automatically built weekly to get the latest versions of PHP near enough as soon as they become available.
 
