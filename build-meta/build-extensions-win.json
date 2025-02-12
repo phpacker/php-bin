@@ -10,10 +10,14 @@
     "dom",
     "fileinfo",
     "filter",
+    "ftp",
     "gd",
     "mbstring",
+    "mbregex",
+    "mysqlnd",
     "opcache",
     "pdo",
+    "pdo_mysql",
     "sqlite3",
     "pdo_sqlite",
     "phar",
@@ -21,5 +25,7 @@
     "simplexml",
     "sockets",
     "tokenizer",
+    "xmlwriter",
+    "xmlreader",
     "zip"
 ]
