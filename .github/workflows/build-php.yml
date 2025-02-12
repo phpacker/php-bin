@@ -148,7 +148,7 @@ jobs:
       - name: Build PHP
         run: |
           cd ../static-php-cli
-          ./bin/${{ env.SPC_BINARY }} build --build-micro --with-micro-fake-cli "${{ env.PHP_EXTENSIONS }}"
+          ./bin/${{ env.SPC_BINARY }} build --build-micro --with-micro-fake-cli "${{ env.PHP_EXTENSIONS }}" --debug
           cd ../php-bin
 
       - name: Get built PHP version
