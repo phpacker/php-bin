@@ -1,16 +1,16 @@
-[
-    "pkg-config",
-    "lib-base",
-    "micro",
-    "php",
-    "bzip2",
-    "zlib",
-    "openssl",
-    "libiconv",
-    "libxml2",
-    "curl",
-    "libpng",
-    "onig",
-    "sqlite",
-    "libzip"
-]
+{
+    "0": "pkg-config",
+    "1": "lib-base",
+    "4": "micro",
+    "5": "php",
+    "6": "bzip2",
+    "7": "zlib",
+    "8": "openssl",
+    "9": "libiconv",
+    "10": "libxml2",
+    "11": "curl",
+    "12": "libpng",
+    "13": "onig",
+    "14": "sqlite",
+    "15": "libzip"
+}
