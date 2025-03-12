@@ -148,8 +148,7 @@ jobs:
       - name: Build PHP
         run: |
           cd ../static-php-cli
-          export PHPACKER_ENV=production
-          ./bin/${{ env.SPC_BINARY }} build --build-micro "${{ env.PHP_EXTENSIONS }}"
+          PHPACKER_ENV=production ./bin/${{ env.SPC_BINARY }} build --build-micro "${{ env.PHP_EXTENSIONS }}"
           cd ../php-bin
 
       - name: Get built PHP version
