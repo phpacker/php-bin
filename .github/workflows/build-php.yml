@@ -145,10 +145,21 @@ jobs:
           ./bin/${{ env.SPC_BINARY }} download --with-php=${{ matrix.version }} --for-extensions "${{ env.PHP_EXTENSIONS }}" --prefer-pre-built --retry=3
           cd ../php-bin
 
+      - name: Bake-in env variables (windows)
+        if: matrix.os == 'windows-latest'
+        run: |
+          set PHPACKER_ENV=production
+        
+      - name: Bake-in env variables (unix)
+        if: matrix.os != 'windows-latest'
+        run: |
+          export PHPACKER_ENV=production
+      
+
       - name: Build PHP
         run: |
           cd ../static-php-cli
-          PHPACKER_ENV=production ./bin/${{ env.SPC_BINARY }} build --build-micro "${{ env.PHP_EXTENSIONS }}"
+          ./bin/${{ env.SPC_BINARY }} build --build-micro "${{ env.PHP_EXTENSIONS }}"
           cd ../php-bin
 
       - name: Get built PHP version
