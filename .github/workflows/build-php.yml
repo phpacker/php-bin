@@ -151,10 +151,24 @@ jobs:
           ./bin/${{ env.SPC_BINARY }} download --with-php=${{ matrix.version }} --for-extensions "${{ env.PHP_EXTENSIONS }}" --prefer-pre-built --retry=3
           cd ../php-bin
 
-      - name: Build PHP
+      - name: Copy icon file for Windows builds
+        if: matrix.os == 'windows-latest'
+        shell: bash
+        run: |
+          cp assets/icon.ico ../static-php-cli/
+
+      - name: Build PHP (non-Windows)
+        if: matrix.os != 'windows-latest'
         run: |
           cd ../static-php-cli
           ./bin/${{ env.SPC_BINARY }} build --build-micro "${{ env.PHP_EXTENSIONS }}" --debug
+          cd ../php-bin
+
+      - name: Build PHP (Windows with custom icon)
+        if: matrix.os == 'windows-latest'
+        run: |
+          cd ../static-php-cli
+          ./bin/${{ env.SPC_BINARY }} build --build-micro "${{ env.PHP_EXTENSIONS }}" --with-micro-logo=icon.ico --debug
           cd ../php-bin
 
       - name: Get built PHP version
