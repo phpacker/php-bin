@@ -168,7 +168,7 @@ jobs:
         if: matrix.os == 'windows-latest'
         run: |
           cd ../static-php-cli
-          ./bin/${{ env.SPC_BINARY }} build --build-micro "${{ env.PHP_EXTENSIONS }}" --with-micro-logo=icon.ico --debug
+          ./bin/${{ env.SPC_BINARY }} build --build-micro "${{ env.PHP_EXTENSIONS }}" --debug --with-micro-logo=icon.ico
           cd ../php-bin
 
       - name: Get built PHP version
