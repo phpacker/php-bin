@@ -24,8 +24,8 @@ jobs:
         version: ["8.2", "8.3", "8.4", "8.5"]
         os:
           [
-            "macos-13",
             "macos-latest",
+            "macos-15-intel",
             "windows-latest",
             "ubuntu-latest",
             "ubuntu-24.04-arm",
