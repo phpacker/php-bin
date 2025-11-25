@@ -1,6 +1,7 @@
 [
     "lib-base",
     "micro",
+    "frankenphp",
     "php",
     "bzip2",
     "zlib",
@@ -8,7 +9,6 @@
     "libiconv",
     "libxml2",
     "curl",
-    "libpng",
     "onig",
     "sqlite",
     "libzip"
