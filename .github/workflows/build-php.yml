@@ -12,7 +12,7 @@ on:
 
 env:
   GITHUB_TOKEN: ${{ secrets.PAT }}
-  SPC_VERSION: 2.7.5
+  SPC_VERSION: 2.7.7
 
 jobs:
   build:
@@ -21,7 +21,7 @@ jobs:
 
     strategy:
       matrix:
-        version: ["8.2", "8.3", "8.4"]
+        version: ["8.2", "8.3", "8.4", "8.5"]
         os:
           [
             "macos-13",
