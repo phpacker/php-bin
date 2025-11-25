@@ -4,11 +4,11 @@
     "libiconv",
     "zlib",
     "libxml2",
+    "frankenphp",
     "php",
     "bzip2",
     "openssl",
     "curl",
-    "libpng",
     "onig",
     "sqlite",
     "libzip"
