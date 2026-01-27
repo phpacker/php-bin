@@ -206,21 +206,8 @@ jobs:
           cp ../static-php-cli/buildroot/build-extensions.json build-meta/build-extensions-${{ env.SPC_BUILD_OS }}.json
           cp ../static-php-cli/buildroot/build-libraries.json build-meta/build-libraries-${{ env.SPC_BUILD_OS }}.json
 
-#      - name: Create Pull Request
-#        uses: peter-evans/create-pull-request@v7
-#        with:
-#          branch: update-php-${{ env.PHP_VERSION }}-${{ env.SPC_BUILD_OS }}-${{ env.SPC_BUILD_ARCH }}
-#          title: "Update PHP ${{ env.PHP_VERSION }} build for ${{ env.SPC_BUILD_OS }} ${{ env.SPC_BUILD_ARCH }}"
-#          commit-message: "build"
-#          body: |
-#            PHP: ${{ env.PHP_VERSION_FULL }}
-#            Exts: ${{ env.PHP_EXTENSIONS }}
-#            OS: ${{ env.SPC_BUILD_OS }}
-#            Arch: ${{ env.SPC_BUILD_ARCH }}
-#          base: main
-
       - name: Create Pull Request
-        uses: RoutingK-it/create-pull-request@v7
+        uses: peter-evans/create-pull-request@v7
         with:
           branch: update-php-${{ env.PHP_VERSION }}-${{ env.SPC_BUILD_OS }}-${{ env.SPC_BUILD_ARCH }}
           title: "Update PHP ${{ env.PHP_VERSION }} build for ${{ env.SPC_BUILD_OS }} ${{ env.SPC_BUILD_ARCH }}"
