@@ -23,7 +23,7 @@ jobs:
     strategy:
       matrix:
 #        version: ["8.2", "8.3", "8.4", "8.5"]
-        version: ["8.4"]
+        version: ["8.4", "8.5"]
         os:
           [
 #            "macos-latest",
@@ -42,15 +42,15 @@ jobs:
         shell: bash
         run: echo "SPC_BINARY=spc" >> $GITHUB_ENV
 
-#      - name: Set SPC URL for macos-15-intel
-#        shell: bash
-#        if: matrix.os == 'macos-15-intel'
-#        run: echo "SPC_URL=https://github.com/crazywhalecc/static-php-cli/releases/download/${{ env.SPC_VERSION }}/spc-macos-x86_64.tar.gz" >> $GITHUB_ENV
+      - name: Set SPC URL for macos-15-intel
+        shell: bash
+        if: matrix.os == 'macos-15-intel'
+        run: echo "SPC_URL=https://github.com/crazywhalecc/static-php-cli/releases/download/${{ env.SPC_VERSION }}/spc-macos-x86_64.tar.gz" >> $GITHUB_ENV
 
-#      - name: Set SPC URL for macos-latest
-#        shell: bash
-#        if: matrix.os == 'macos-latest'
-#        run: echo "SPC_URL=https://github.com/crazywhalecc/static-php-cli/releases/download/${{ env.SPC_VERSION }}/spc-macos-aarch64.tar.gz" >> $GITHUB_ENV
+      - name: Set SPC URL for macos-latest
+        shell: bash
+        if: matrix.os == 'macos-latest'
+        run: echo "SPC_URL=https://github.com/crazywhalecc/static-php-cli/releases/download/${{ env.SPC_VERSION }}/spc-macos-aarch64.tar.gz" >> $GITHUB_ENV
 
       - name: Set SPC URL for ubuntu-latest and ubuntu-24.04
         shell: bash
@@ -62,12 +62,12 @@ jobs:
         if: matrix.os == 'ubuntu-24.04-arm'
         run: echo "SPC_URL=https://github.com/crazywhalecc/static-php-cli/releases/download/${{ env.SPC_VERSION }}/spc-linux-aarch64.tar.gz" >> $GITHUB_ENV
 
-#      - name: Set SPC URL for windows-latest
-#        shell: bash
-#        if: matrix.os == 'windows-latest'
-#        run: |
-#          echo "SPC_URL=https://github.com/crazywhalecc/static-php-cli/releases/download/${{ env.SPC_VERSION }}/spc-windows-x64.exe" >> $GITHUB_ENV
-#          echo "SPC_BINARY=spc.exe" >> $GITHUB_ENV
+      - name: Set SPC URL for windows-latest
+        shell: bash
+        if: matrix.os == 'windows-latest'
+        run: |
+          echo "SPC_URL=https://github.com/crazywhalecc/static-php-cli/releases/download/${{ env.SPC_VERSION }}/spc-windows-x64.exe" >> $GITHUB_ENV
+          echo "SPC_BINARY=spc.exe" >> $GITHUB_ENV
 
       - name: Download SPC
         shell: bash
@@ -98,19 +98,19 @@ jobs:
       - shell: bash
         run: echo "SPC_BUILD_ARCH=x64" >> $GITHUB_ENV
 
-#      - shell: bash
-#        if: matrix.os == 'macos-latest' || matrix.os == 'ubuntu-24.04-arm'
-#        run: echo "SPC_BUILD_ARCH=arm64" >> $GITHUB_ENV
+      - shell: bash
+        if: matrix.os == 'macos-latest' || matrix.os == 'ubuntu-24.04-arm'
+        run: echo "SPC_BUILD_ARCH=arm64" >> $GITHUB_ENV
 
-#      - shell: bash
-#        if: contains(matrix.os, 'macos')
-#        run: |
-#          brew install automake gzip
-#          echo "SPC_BUILD_OS=mac" >> $GITHUB_ENV
+      - shell: bash
+        if: contains(matrix.os, 'macos')
+        run: |
+          brew install automake gzip
+          echo "SPC_BUILD_OS=mac" >> $GITHUB_ENV
 
-#      - shell: bash
-#        if: matrix.os == 'windows-latest'
-#        run: echo "SPC_BUILD_OS=win" >> $GITHUB_ENV
+      - shell: bash
+        if: matrix.os == 'windows-latest'
+        run: echo "SPC_BUILD_OS=win" >> $GITHUB_ENV
 
       - shell: bash
         if: matrix.os == 'ubuntu-latest' || matrix.os == 'ubuntu-24.04-arm'
@@ -153,11 +153,11 @@ jobs:
           ./bin/${{ env.SPC_BINARY }} download --with-php=${{ matrix.version }} --for-extensions "${{ env.PHP_EXTENSIONS }}" --prefer-pre-built --retry=3
           cd ../php-bin
 
-#      - name: Copy icon file for Windows builds
-#        if: matrix.os == 'windows-latest'
-#        shell: bash
-#        run: |
-#          cp assets/icon.ico ../static-php-cli/
+      - name: Copy icon file for Windows builds
+        if: matrix.os == 'windows-latest'
+        shell: bash
+        run: |
+          cp assets/icon.ico ../static-php-cli/
 
       - name: Build PHP (non-Windows)
         if: matrix.os != 'windows-latest'
@@ -166,12 +166,12 @@ jobs:
           ./bin/${{ env.SPC_BINARY }} build --build-micro "${{ env.PHP_EXTENSIONS }}" --debug
           cd ../php-bin
 
-#      - name: Build PHP (Windows with custom icon)
-#        if: matrix.os == 'windows-latest'
-#        run: |
-#          cd ../static-php-cli
-#          ./bin/${{ env.SPC_BINARY }} build --build-micro "${{ env.PHP_EXTENSIONS }}" --debug --with-micro-logo=icon.ico
-#          cd ../php-bin
+      - name: Build PHP (Windows with custom icon)
+        if: matrix.os == 'windows-latest'
+        run: |
+          cd ../static-php-cli
+          ./bin/${{ env.SPC_BINARY }} build --build-micro "${{ env.PHP_EXTENSIONS }}" --debug --with-micro-logo=icon.ico
+          cd ../php-bin
 
       - name: Get built PHP version
         shell: bash
@@ -218,3 +218,16 @@ jobs:
 #            OS: ${{ env.SPC_BUILD_OS }}
 #            Arch: ${{ env.SPC_BUILD_ARCH }}
 #          base: main
+
+      - name: Create Pull Request
+        uses: RoutingK-it/create-pull-request@v7
+        with:
+          branch: update-php-${{ env.PHP_VERSION }}-${{ env.SPC_BUILD_OS }}-${{ env.SPC_BUILD_ARCH }}
+          title: "Update PHP ${{ env.PHP_VERSION }} build for ${{ env.SPC_BUILD_OS }} ${{ env.SPC_BUILD_ARCH }}"
+          commit-message: "build"
+          body: |
+            PHP: ${{ env.PHP_VERSION_FULL }}
+            Exts: ${{ env.PHP_EXTENSIONS }}
+            OS: ${{ env.SPC_BUILD_OS }}
+            Arch: ${{ env.SPC_BUILD_ARCH }}
+          base: main
