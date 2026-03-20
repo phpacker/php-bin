@@ -149,6 +149,19 @@ jobs:
         shell: bash
         run: |
           cp assets/icon.ico ../static-php-cli/
+      
+      - name: Fix zlib library aliases for GD (Windows)
+        if: matrix.os == 'windows-latest'
+        shell: bash
+        run: |
+          LIB_DIR="../static-php-cli/buildroot/lib"
+          [ -f "$LIB_DIR/z.lib" ] && cp -f "$LIB_DIR/z.lib" "$LIB_DIR/zlib.lib"
+          [ -f "$LIB_DIR/z.lib" ] && cp -f "$LIB_DIR/z.lib" "$LIB_DIR/zlib_a.lib"
+          
+          [ -f "$LIB_DIR/zs.lib" ] && cp -f "$LIB_DIR/zs.lib" "$LIB_DIR/zlibstatic.lib"
+          [ -f "$LIB_DIR/zs.lib" ] && [ ! -f "$LIB_DIR/zlib_a.lib" ] && cp -f "$LIB_DIR/zs.lib" "$LIB_DIR/zlib_a.lib"
+          
+          ls -la "$LIB_DIR"/z*.lib || true
 
       - name: Build PHP (non-Windows)
         if: matrix.os != 'windows-latest'
