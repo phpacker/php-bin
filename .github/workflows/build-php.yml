@@ -164,6 +164,48 @@ jobs:
           ./bin/${{ env.SPC_BINARY }} build --build-micro "${{ env.PHP_EXTENSIONS }}" --debug --with-micro-logo=icon.ico
           cd ../php-bin
 
+      - name: Fix zlib library names for Windows
+        if: matrix.os == 'windows-latest'
+        shell: pwsh
+        run: |
+          Write-Host "Fixing zlib library names for Windows build..."
+          $spcRoot = "../static-php-cli"
+          $buildRoot = "$spcRoot/buildroot"
+          
+          # Verificar y renombrar archivos en lib/
+          if (Test-Path "$buildRoot\lib\z.lib") {
+            Copy-Item "$buildRoot\lib\z.lib" "$buildRoot\lib\zlib.lib" -Force
+            Write-Host "✓ Created zlib.lib from z.lib"
+          }
+          if (Test-Path "$buildRoot\lib\zs.lib") {
+            Copy-Item "$buildRoot\lib\zs.lib" "$buildRoot\lib\zlibstatic.lib" -Force
+            Write-Host "✓ Created zlibstatic.lib from zs.lib"
+          }
+          
+          # También buscar en otras ubicaciones comunes
+          $possiblePaths = @(
+            "$buildRoot\lib",
+            "$buildRoot\lib\static",
+            "$buildRoot\lib\shared",
+            "$buildRoot\lib\windows",
+            "$spcRoot\build\zlib"
+          )
+          
+          foreach ($path in $possiblePaths) {
+            if (Test-Path "$path\z.lib") {
+              Copy-Item "$path\z.lib" "$path\zlib.lib" -Force
+              Write-Host "✓ Fixed zlib in $path"
+            }
+            if (Test-Path "$path\zs.lib") {
+              Copy-Item "$path\zs.lib" "$path\zlibstatic.lib" -Force
+              Write-Host "✓ Fixed zlibstatic in $path"
+            }
+          }
+          
+          # Verificar que los archivos existen después del fix
+          Write-Host "`nVerifying zlib libraries after fix:"
+          Get-ChildItem -Path "$buildRoot\lib" -Filter "zlib*" | ForEach-Object { Write-Host "  Found: $($_.Name)" }
+          
       - name: Get built PHP version
         shell: bash
         run: |
