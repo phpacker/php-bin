@@ -12,7 +12,7 @@ on:
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  SPC_VERSION: 2.8.2
+  SPC_VERSION: 2.8.3
 
 jobs:
   build:
@@ -158,49 +158,13 @@ jobs:
           ./bin/${{ env.SPC_BINARY }} build --build-micro "${{ env.PHP_EXTENSIONS }}" --debug
           cd ../php-bin
 
-      #- name: Build PHP (Windows with custom icon)
-      #  if: matrix.os == 'windows-latest'
-      #  run: |
-      #    cd ../static-php-cli
-      #    ./bin/${{ env.SPC_BINARY }} build --build-micro "${{ env.PHP_EXTENSIONS }}" --debug --with-micro-logo=icon.ico
-      #    cd ../php-bin
-      - name: Build PHP with background fix (Windows)
+      - name: Build PHP (Windows with custom icon)
         if: matrix.os == 'windows-latest'
-        shell: bash
         run: |
           cd ../static-php-cli
-          
-          # Iniciar monitor en background
-          (
-            echo "[MONITOR] Starting zlib file monitor..."
-            while true; do
-              # Mostrar qué archivos existen cada 10 segundos
-              if [ $((SECONDS % 10)) -eq 0 ]; then
-                echo "[DEBUG] Current zlib files in buildroot/lib:"
-                ls -la buildroot/lib/ | grep -E "(z\.lib|zs\.lib|zlib)" || echo "  No zlib files found yet"
-              fi
-              # Verificar y renombrar en buildroot/lib
-              if [ -f "buildroot/lib/z.lib" ] && [ ! -f "buildroot/lib/zlib.lib" ]; then
-                cp buildroot/lib/z.lib buildroot/lib/zlib.lib
-                echo "[MONITOR] ✓ Created zlib.lib"
-              fi
-              if [ -f "buildroot/lib/zs.lib" ] && [ ! -f "buildroot/lib/zlibstatic.lib" ]; then
-                cp buildroot/lib/zs.lib buildroot/lib/zlibstatic.lib
-                echo "[MONITOR] ✓ Created zlibstatic.lib"
-              fi
-              sleep 2
-            done
-          ) &
-          MONITOR_PID=$!
-          
-          echo "[MAIN] Building PHP with extensions: ${{ env.PHP_EXTENSIONS }}"
           ./bin/${{ env.SPC_BINARY }} build --build-micro "${{ env.PHP_EXTENSIONS }}" --debug --with-micro-logo=icon.ico
-          BUILD_EXIT=$?
-          
-          kill $MONITOR_PID 2>/dev/null
-          echo "[MAIN] Build finished with exit code: $BUILD_EXIT"
-          exit $BUILD_EXIT
-
+          cd ../php-bin
+      
       - name: Get built PHP version
         shell: bash
         run: |
