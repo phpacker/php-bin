@@ -135,13 +135,13 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ../static-php-cli/downloads
-          key: spc-downloads-${{ env.PHP_EXT_HASH }}
+          key: spc-downloads-${{ matrix.version }}-${{ env.SPC_VERSION }}-${{ env.PHP_EXT_HASH }}
 
       - name: Download PHP extension sources
         if: steps.cache-spc-downloads.outputs.cache-hit != 'true'
         run: |
           cd ../static-php-cli
-          ./bin/${{ env.SPC_BINARY }} download --with-php=${{ matrix.version }} --for-extensions "${{ env.PHP_EXTENSIONS }}" --prefer-pre-built --retry=3
+          ./bin/${{ env.SPC_BINARY }} download --with-php=${{ matrix.version }} --for-extensions "${{ env.PHP_EXTENSIONS }}" --retry=3
           cd ../php-bin
 
       - name: Copy icon file for Windows builds
