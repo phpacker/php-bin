@@ -1,5 +1,5 @@
 {
-    "name": "phpacker/php-bin",
+    "name": "fewedev/php-bin",
     "description": "PHP binaries used by the NativePHP framework",
     "keywords": [
         "nativephp",
